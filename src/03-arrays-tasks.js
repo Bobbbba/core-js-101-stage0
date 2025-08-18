@@ -19,10 +19,13 @@
  *    ['Array', 'Number', 'string'], 'Date'    => -1
  *    [0, 1, 2, 3, 4, 5], 5    => 5
  */
-function findElement(/* arr, value */) {
-  throw new Error('Not implemented');
+function findElement(arr, value) {
+  const index = arr.indexOf(value);
+  if (value !== -1) {
+    return index;
+  }
+  return -1;
 }
-
 /**
  * Generates an array of odd numbers of the specified length
  *
