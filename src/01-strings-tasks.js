@@ -198,8 +198,33 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  if (width < 2 || height < 2) return 'Размер должен быть не менее 2x2';
+  const tl = '┌';
+  const tr = '┐';
+  const bl = '└';
+  const br = '┘';
+  const h = '─';
+  const v = '│';
+
+  let rect = '';
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      if (i === 0) {
+        if (j === 0) rect += tl;
+        else if (j === width - 1) rect += tr;
+        else rect += h;
+      } else if (i === height - 1) {
+        if (j === 0) rect += bl;
+        else if (j === width - 1) rect += br;
+        else rect += h;
+      } else if (j === 0 || j === width - 1) rect += v;
+      else rect += ' ';
+    }
+    rect += '\n';
+  }
+
+  return rect;
 }
 
 /**
@@ -218,8 +243,13 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  return str.replace(/[a-zA-Z]/g, function charCodes(char) {
+    const charCode = char.charCodeAt(0);
+    const isUpperCase = charCode >= 65 && charCode <= 90;
+    const base = isUpperCase ? 65 : 97;
+    return String.fromCharCode(((charCode - base + 13) % 26) + base);
+  });
 }
 
 /**
