@@ -305,8 +305,18 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const result = num
+    .toString()
+    .split('')
+    .reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+  if (result > 9) {
+    return result
+      .toString()
+      .split('')
+      .reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+  }
+  return result;
 }
 
 /**
@@ -392,8 +402,23 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  if (m1[0].length !== m2.length) {
+    throw new Error('Матрицы не совместимы');
+  }
+
+  const resultMatrix = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    resultMatrix[i] = new Array(m2[0].length).fill(0);
+  }
+  for (let i = 0; i < m1.length; i += 1) {
+    for (let j = 0; j < m2[0].length; j += 1) {
+      for (let k = 0; k < m2.length; k += 1) {
+        resultMatrix[i][j] += m1[i][k] * m2[k][j];
+      }
+    }
+  }
+  return resultMatrix;
 }
 
 /**
@@ -426,8 +451,61 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  if (
+    (position[0][0] === position[1][1] && position[0][0] === position[2][2]) ||
+    (position[0][0] === position[0][1] && position[0][0] === position[0][2]) ||
+    (position[0][0] === position[1][0] && position[0][0] === position[2][0])
+  ) {
+    if (position[0][0] === 'X') {
+      return 'X';
+    }
+    if (position[0][0] === '0') {
+      return '0';
+    }
+  }
+  if (position[0][1] === position[1][1] && position[0][1] === position[2][1]) {
+    if (position[0][1] === 'X') {
+      return 'X';
+    }
+
+    if (position[0][1] === '0') {
+      return '0';
+    }
+  }
+  if (position[0][2] === position[1][2] && position[0][2] === position[2][2]) {
+    if (position[0][2] === 'X') {
+      return 'X';
+    }
+
+    if (position[0][2] === '0') {
+      return '0';
+    }
+  }
+  if (position[1][0] === position[1][1] && position[1][0] === position[1][2]) {
+    if (position[1][0] === 'X') {
+      return 'X';
+    }
+
+    if (position[1][0] === '0') {
+      return '0';
+    }
+  }
+
+  if (
+    (position[2][0] === position[2][1] && position[2][0] === position[2][2]) ||
+    (position[2][0] === position[1][1] && position[2][0] === position[0][2])
+  ) {
+    if (position[2][0] === 'X') {
+      return 'X';
+    }
+
+    if (position[2][0] === '0') {
+      return '0';
+    }
+  }
+
+  return undefined;
 }
 
 module.exports = {
